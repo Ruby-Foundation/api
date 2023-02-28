@@ -1,18 +1,16 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'discord'
+  protected tableName = 'tickets'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.string('id').primary()
-      table.string('user_id').unique()
-        .references('id')
-        .inTable('users')
+      table.string('type')
+      table.string('user_id').references('id')
+        .inTable('discords')
         .onDelete('CASCADE')
-      table.string('profil_id').unique()
-      table.integer('exp').defaultTo(0)
-      table.integer('level').defaultTo(1)
+      table.string('channel_id')
 
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })
