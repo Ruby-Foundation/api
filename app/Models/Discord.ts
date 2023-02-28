@@ -8,9 +8,9 @@ import {
   HasMany,
   hasMany
 } from '@ioc:Adonis/Lucid/Orm'
-import {randomUUID} from "crypto";
-import Ticket from "App/Models/Ticket";
-import User from "App/Models/User";
+import {randomUUID} from 'crypto'
+import Ticket from 'App/Models/Ticket'
+import User from 'App/Models/User'
 
 export default class Discord extends BaseModel {
   @column({ isPrimary: true })
@@ -27,10 +27,10 @@ export default class Discord extends BaseModel {
 
   @column()
   public level: number
-  
+
   @hasMany(() => Ticket)
   public tickets: HasMany<typeof Ticket>
-  
+
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 

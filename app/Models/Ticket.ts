@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
-import {BaseModel, beforeCreate, BelongsTo, belongsTo, column} from '@ioc:Adonis/Lucid/Orm'
-import {randomUUID} from "crypto";
-import Discord from "App/Models/Discord";
+import { BaseModel, beforeCreate, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { randomUUID } from 'crypto'
+import Discord from 'App/Models/Discord'
 
 export default class Ticket extends BaseModel {
   @column({ isPrimary: true })
@@ -12,10 +12,10 @@ export default class Ticket extends BaseModel {
 
   @column()
   public userId: string
-  
+
   @column()
   public channelId: string
-  
+
   @belongsTo(() => Discord)
   public user: BelongsTo<typeof Discord>
 
