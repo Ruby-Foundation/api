@@ -28,7 +28,9 @@ export default class Discord extends BaseModel {
   @column()
   public level: number
 
-  @hasMany(() => Ticket)
+  @hasMany(() => Ticket, {
+    foreignKey: 'userId'
+  })
   public tickets: HasMany<typeof Ticket>
 
   @belongsTo(() => User)

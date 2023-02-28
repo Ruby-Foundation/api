@@ -16,7 +16,9 @@ export default class Ticket extends BaseModel {
   @column()
   public channelId: string
 
-  @belongsTo(() => Discord)
+  @belongsTo(() => Discord, {
+    foreignKey: 'userId'
+  })
   public user: BelongsTo<typeof Discord>
 
   @column.dateTime({ autoCreate: true })
