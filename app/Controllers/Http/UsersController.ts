@@ -3,11 +3,14 @@ import User from '../../Models/User'
 import { StoreValidator, UpdateValidator } from 'App/Validators/UserValidator'
 
 export default class UsersController {
-  public async index (): Promise<User[]> {
+  public async index ({ bouncer }: HttpContextContract): Promise<User[]> {
+    await bouncer.with('UserPolicy').authorize('view')
     return User.query()
   }
 
-  public async show ({ params }: HttpContextContract): Promise<User | null> {
+  public async show ({ params, bouncer }: HttpContextContract): Promise<User | null> {
+    await bouncer.with('UserPolicy').authorize('view')
+
     return User.query()
       .where('id', params.id)
       .preload('roles', (query) => {
@@ -17,12 +20,16 @@ export default class UsersController {
       .first()
   }
 
-  public async store ({ request }: HttpContextContract): Promise<User> {
+  public async store ({ request, bouncer }: HttpContextContract): Promise<User> {
+    await bouncer.with('UserPolicy').authorize('store')
+
     const data = await request.validate(StoreValidator)
     return User.create(data)
   }
 
-  public async update ({ params, request }: HttpContextContract): Promise<User> {
+  public async update ({ params, request, bouncer }: HttpContextContract): Promise<User> {
+    await bouncer.with('UserPolicy').authorize('update')
+
     const data = await request.validate(UpdateValidator)
     const user = await User.findOrFail(params.id)
 
@@ -40,7 +47,9 @@ export default class UsersController {
     return user.merge(data).save()
   }
 
-  public async delete ({ params }: HttpContextContract): Promise<void> {
+  public async delete ({ params, bouncer }: HttpContextContract): Promise<void> {
+    await bouncer.with('UserPolicy').authorize('destroy')
+
     const user = await User.findOrFail(params.id)
     return user.delete()
   }
