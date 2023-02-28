@@ -1,9 +1,18 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
 import { randomUUID } from 'crypto'
-import { column, beforeSave, beforeCreate, BaseModel, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import {
+  column,
+  beforeSave,
+  beforeCreate,
+  BaseModel,
+  manyToMany,
+  ManyToMany,
+  hasOne, HasOne
+} from '@ioc:Adonis/Lucid/Orm'
 import Role from './Role'
 import Permission from './Permission'
+import Discord from 'App/Models/Discord'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -26,6 +35,9 @@ export default class User extends BaseModel {
 
   @manyToMany(() => Permission)
   public permissions: ManyToMany<typeof Permission>
+
+  @hasOne(() => Discord)
+  public discord: HasOne<typeof Discord>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
