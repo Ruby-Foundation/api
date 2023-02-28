@@ -18,8 +18,16 @@ export class StoreValidator {
     password_confirmation: schema.string({ trim: true }, [
       rules.equalTo('password')
     ]),
-    roles: schema.array.optional().members(schema.string({ trim: true })),
-    permissions: schema.array.optional().members(schema.string({ trim: true }))
+    roles: schema.array.optional().members(schema.string({ trim: true }, [
+      rules.exists({
+        table: 'roles', column: 'id'
+      })
+    ])),
+    permissions: schema.array.optional().members(schema.string({ trim: true }, [
+      rules.exists({
+        table: 'permissions', column: 'id'
+      })
+    ]))
   })
 
   public messages: CustomMessages = {}
@@ -42,8 +50,16 @@ export class UpdateValidator {
     password_confirmation: schema.string.optional({ trim: true }, [
       rules.equalTo('password')
     ]),
-    roles: schema.array.optional().members(schema.string({ trim: true })),
-    permissions: schema.array.optional().members(schema.string({ trim: true }))
+    roles: schema.array.optional().members(schema.string({ trim: true }, [
+      rules.exists({
+        table: 'roles', column: 'id'
+      })
+    ])),
+    permissions: schema.array.optional().members(schema.string({ trim: true }, [
+      rules.exists({
+        table: 'permissions', column: 'id'
+      })
+    ]))
   })
 
   public messages: CustomMessages = {}
