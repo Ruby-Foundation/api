@@ -1,5 +1,6 @@
 import { test } from '@japa/runner'
 import Database from "@ioc:Adonis/Lucid/Database";
+import Env from "@ioc:Adonis/Core/Env";
 
 test.group('Auth login', ({ each }) => {
   each.setup(async () => {
@@ -37,5 +38,17 @@ test.group('Auth login', ({ each }) => {
       })
 
     response.assertStatus(200)
+  })
+
+  test('already connected', async ({ client }) => {
+    const response = await client
+      .post('/api/v1/auth/login')
+      .form({
+        email: 'nathael@gmail.com',
+        password: 'nathael'
+      })
+      .bearerToken(Env.get('ACCOUNT_TOKEN'))
+
+    response.assertStatus(401)
   })
 })
