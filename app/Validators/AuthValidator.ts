@@ -23,6 +23,7 @@ export class RegisterValidator {
         column: 'email'
       })
     ]),
+    username: schema.string({ trim: true }),
     password: schema.string({ trim: true })
   })
 

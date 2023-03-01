@@ -15,9 +15,6 @@ export class StoreValidator {
     password: schema.string({ trim: true }, [
       rules.minLength(7)
     ]),
-    password_confirmation: schema.string({ trim: true }, [
-      rules.equalTo('password')
-    ]),
     roles: schema.array.optional().members(schema.string({ trim: true }, [
       rules.exists({
         table: 'roles', column: 'id'
