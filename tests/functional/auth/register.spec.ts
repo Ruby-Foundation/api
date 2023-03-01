@@ -35,7 +35,7 @@ test.group('Auth register', ({ each }) => {
     const response = await client
       .post('/api/v1/auth/register')
       .form({
-        email: 'test@gmail.com',
+        email: 'lorem@gmail.com',
         username: 'test',
         password: 'test'
       })
