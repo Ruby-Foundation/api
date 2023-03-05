@@ -44,6 +44,8 @@ export default class CommandesController {
   public async update ({ bouncer, request, params }: HttpContextContract): Promise<Commande> {
     await bouncer.with('CommandePolicy').authorize('update')
     const commande = await Commande.findOrFail(params.id)
+    await commande.load('contributors')
+    await commande.load('client')
     const data = await request.validate(UpdateValidator)
 
     if (data.contributors) {
