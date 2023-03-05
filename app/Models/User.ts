@@ -36,8 +36,10 @@ export default class User extends BaseModel {
 
   @manyToMany(() => Permission)
   public permissions: ManyToMany<typeof Permission>
-  
-  @manyToMany(() => Commande)
+
+  @manyToMany(() => Commande, {
+    pivotTable: 'workings'
+  })
   public commandes: ManyToMany<typeof Commande>
 
   @hasOne(() => Discord)

@@ -32,10 +32,14 @@ export default class Commande extends BaseModel {
   @column()
   public clientId: string
 
-  @belongsTo(() => User)
+  @belongsTo(() => User, {
+    foreignKey: 'clientId'
+  })
   public client: BelongsTo<typeof User>
 
-  @manyToMany(() => User)
+  @manyToMany(() => User, {
+    pivotTable: 'workings'
+  })
   public contributors: ManyToMany<typeof User>
 
   @column.dateTime({ autoCreate: true })
