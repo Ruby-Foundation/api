@@ -13,6 +13,7 @@ import {
 import Role from './Role'
 import Permission from './Permission'
 import Discord from 'App/Models/Discord'
+import Commande from "App/Models/Commande";
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -35,6 +36,9 @@ export default class User extends BaseModel {
 
   @manyToMany(() => Permission)
   public permissions: ManyToMany<typeof Permission>
+  
+  @manyToMany(() => Commande)
+  public commandes: ManyToMany<typeof Commande>
 
   @hasOne(() => Discord)
   public discord: HasOne<typeof Discord>
