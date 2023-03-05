@@ -22,11 +22,13 @@ import Route from '@ioc:Adonis/Core/Route'
 import authRoute from './routes/auth'
 import usersRoute from './routes/users'
 import discordRoute from './routes/discord'
+import commandesRoute from './routes/commandes'
 
 Route.group(() => {
   Route.group(() => {
     authRoute()
     usersRoute()
     discordRoute()
+    commandesRoute()
   }).prefix('/v1')
 }).prefix('/api')
