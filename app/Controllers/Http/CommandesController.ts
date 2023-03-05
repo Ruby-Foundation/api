@@ -12,11 +12,12 @@ export default class CommandesController {
 
   public async show ({ bouncer, params }: HttpContextContract): Promise<Commande | null> {
     await bouncer.with('CommandePolicy').authorize('view')
-    return Commande.query()
-      .where('id', params.id)
-      .preload('client')
-      .preload('contributors')
-      .first()
+    const commande = await Commande.findOrFail(params.id)
+
+    await commande.load('client')
+    await commande.load('contributors')
+
+    return commande
   }
 
   public async user ({ bouncer, params }: HttpContextContract): Promise<Commande[]> {
