@@ -41,9 +41,17 @@ export default class CommandesController {
 
     return commande
   }
-  public async update ({ bouncer, request, params }: HttpContextContract): Promise<Commande> {
+
+  public async update ({ bouncer, request, params, response }: HttpContextContract): Promise<Commande | void> {
     await bouncer.with('CommandePolicy').authorize('update')
     const commande = await Commande.findOrFail(params.id)
+
+    if (commande.state === "finish") {
+      return response.status(423).send({
+        message: 'La commande est verrouillée'
+      })
+    }
+
     await commande.load('contributors')
     await commande.load('client')
     const data = await request.validate(UpdateValidator)
